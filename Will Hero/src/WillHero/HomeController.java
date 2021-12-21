@@ -2,6 +2,7 @@ package WillHero;
 
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -46,9 +49,22 @@ public class HomeController {
         stage.setScene(new Scene(root));
     }
     public void startGame(ActionEvent e)throws IOException{
-        Parent root=FXMLLoader.load(getClass().getResource("GameScene.fxml"));
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("GameScene.fxml"));
+        Parent root=loader.load();
+        GameController controller=loader.getController();
+        Scene scene=new Scene(root,653,653);
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if(keyEvent.getCode()== KeyCode.D);
+                {
+                    System.out.println("Hiii");
+                    controller.move();
+                }
+            }
+        });
         Stage stage=(Stage)((Node)e.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        stage.setScene(scene);
     }
 
     public void back(ActionEvent e) throws IOException {

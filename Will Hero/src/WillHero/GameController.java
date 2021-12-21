@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -32,10 +33,26 @@ public class GameController implements Initializable {
     private Button pauseButton;
 
     @FXML
-    private AnchorPane coin11,coin22;
+    private AnchorPane coin11,coin22,platform,platform12,gameSc;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        AnchorPane pn=new AnchorPane();
+        pn.setLayoutX(1425);
+        pn.setLayoutY(394);
+        Image island=new Image("Assets/island1.png");
+        int k=0;
+        for(int i=0;i<3000;i+=300) {
+            ImageView island_img=new ImageView(island);
+            gameSc.getChildren().add(island_img);
+            ((ImageView)(Node)gameSc.getChildren().get(k)).setLayoutX(i);
+            ((ImageView)(Node)gameSc.getChildren().get(k++)).setLayoutY(15);
+        }
+        gameSc.getChildren().add(pn);
+
+
         TranslateTransition heroJump=new TranslateTransition();
         heroJump.setNode(hero);
         heroJump.setDuration(Duration.millis(500));
@@ -66,6 +83,10 @@ public class GameController implements Initializable {
 
         coinMove(coin11);
         coinMove(coin22);
+
+    }
+    public void move(){
+        platform.setTranslateX(platform.getTranslateX()-100);
     }
 
     void coinMove(AnchorPane coi){
