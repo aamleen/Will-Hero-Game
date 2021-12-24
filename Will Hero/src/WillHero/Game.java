@@ -23,7 +23,7 @@ public class Game extends Application {
         //scene.getStylesheets().add(getClass().getResource("jiggly_button.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Will Hero");
-        stage.setResizable(false);
+        stage.setResizable(true);
 
         Image icon=new Image("Assets/icon.jpg");
         stage.getIcons().add(icon);

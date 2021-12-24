@@ -1,6 +1,5 @@
 package WillHero;
 
-import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,14 +8,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -56,11 +51,13 @@ public class HomeController {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                if(keyEvent.getCode()== KeyCode.D);
+                if(keyEvent.getCode()== KeyCode.D)
                 {
                     System.out.println("Hiii");
                     controller.move();
+                    controller.checkCollision();
                 }
+
             }
         });
         Stage stage=(Stage)((Node)e.getSource()).getScene().getWindow();
