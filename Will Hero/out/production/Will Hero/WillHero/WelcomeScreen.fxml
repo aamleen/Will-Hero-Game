@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="WelcomePane" prefHeight="653.0" prefWidth="1337.0" style="-fx-background-image: url('Assets/WelcomeScreen.jpeg');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WillHero.HomeController">
+<AnchorPane fx:id="WelcomePane" prefHeight="653.0" prefWidth="1337.0" style="-fx-background-image: url('Assets/WelcomeScreen.jpeg');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WillHero.Game">
    <children>
       <Button fx:id="newGame" alignment="BOTTOM_LEFT" layoutX="860.0" layoutY="126.0" mnemonicParsing="false" onAction="#newGame" style="-fx-blend-mode: hard-light;" text="New Game">
          <font>
@@ -18,7 +18,7 @@
          <font>
             <Font size="19.0" />
          </font></Button>
-      <Button fx:id="exitGame" layoutX="891.0" layoutY="333.0" mnemonicParsing="false" onAction="#exitGame" style="-fx-blend-mode: hard-light; -fx-background-color: #ff6666;" text="Exit">
+      <Button fx:id="exitGame" layoutX="891.0" layoutY="333.0" mnemonicParsing="false" onAction="#exitScreen" style="-fx-blend-mode: hard-light; -fx-background-color: #ff6666;" text="Exit">
          <font>
             <Font size="19.0" />
          </font></Button>

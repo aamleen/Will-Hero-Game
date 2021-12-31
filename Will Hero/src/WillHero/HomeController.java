@@ -53,9 +53,10 @@ public class HomeController {
             public void handle(KeyEvent keyEvent) {
                 if(keyEvent.getCode()== KeyCode.D)
                 {
-                    System.out.println("Hiii");
-                    controller.move();
-                    controller.checkCollision();
+                    controller.getHeroAnimation().pause();
+                    if(controller.checkCollision()==false)
+                        controller.move(100);
+                    controller.getHeroAnimation().play();
                 }
 
             }
