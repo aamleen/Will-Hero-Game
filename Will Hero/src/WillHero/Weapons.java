@@ -1,9 +1,16 @@
 package WillHero;
 
+import javafx.scene.image.ImageView;
+
 public abstract class Weapons {
-    int level;
-    int power;
-    int ID;
+    private int power;
+    private int ID;
+    private String name;
+    protected ImageView weapon;
+
+    Weapons(String name){
+        this.name =name;
+    }
 
     public boolean if_hits(){
         return true;
@@ -12,14 +19,16 @@ public abstract class Weapons {
         return 0;
     }
     public int getPower(){
-        return 0;
+        return power;
     }
     public void setPower(int power){
-
+        this.power=power;
     }
-    public void setLevel(int level){
 
+
+
+    @Override
+    public String toString() {
+        return name;
     }
-    abstract void trajectory_motion();
-
 }

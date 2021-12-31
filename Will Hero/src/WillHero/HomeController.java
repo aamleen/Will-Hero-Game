@@ -46,7 +46,7 @@ public class HomeController {
     public void startGame(ActionEvent e)throws IOException{
         FXMLLoader loader=new FXMLLoader(getClass().getResource("GameScene.fxml"));
         Parent root=loader.load();
-        GameController controller=loader.getController();
+        Hero controller=loader.getController();
         Scene scene=new Scene(root,653,653);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

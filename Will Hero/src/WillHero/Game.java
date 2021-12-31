@@ -40,11 +40,14 @@ public class Game extends Application {
 //    private ArrayList<Game_Objects>  Weaponchest;
 //    private ArrayList<Game_Objects> Tnt;
 
+    private int highscore;
+
     public Game(){
-        game_objects=new ArrayList<>();
-        platformer=new Platformer();
-        islands=new ArrayList<>();
-        user=new User(this);
+            game_objects=new ArrayList<>();
+            platformer=new Platformer();
+          islands=new ArrayList<>();
+          user=new User(this);
+          highscore=0;
 //        Coinchest = new  ArrayList<>();
 //        Weaponchest = new ArrayList<>();
 //        Tnt = new ArrayList<>();
@@ -79,6 +82,14 @@ public class Game extends Application {
 
     public void setCurrentScene(Scene currentScene) {
         this.currentScene = currentScene;
+    }
+
+    public int getHighscore() {
+        return highscore;
+    }
+
+    public void setHighscore(int highscore) {
+        this.highscore = highscore;
     }
 
     public void newGame(ActionEvent e) throws IOException {
@@ -130,6 +141,19 @@ public class Game extends Application {
             System.out.println("");
             return null;
         }
+    }
+
+    public boolean if_collision(Hero hero){
+        int res=game_objects.get(0).if_collides(hero);
+        if (res==1)
+            return true;
+        if(res==-1)
+            game_objects.remove(0);
+        return false;
+    }
+
+    public void onCollision(Hero hero){
+        game_objects.get(0).onCollision(hero);
     }
 
 

@@ -33,6 +33,8 @@ public class User {
     @FXML
     private AnchorPane newGamePane;
 
+    private Label onScreen_score;
+
 
     private int score;
     private Game game;
@@ -59,8 +61,10 @@ public class User {
     public void getScore(){
 
     }
-    public int setScore(int score){
-        return 0;
+    public void setScore(int score){
+        if(score>game.getHighscore())
+            game.setHighscore(score);
+        this.score=score;
     }
     public void end_game(){
 
@@ -77,6 +81,7 @@ public class User {
         }
     }
     public void addObjects(AnchorPane movingPane){
+
         try {
             int i = 0;
             while (game.getObj(i) != null) {
@@ -100,17 +105,18 @@ public class User {
 
     public void startGame(ActionEvent e)throws IOException{
         FXMLLoader loader=new FXMLLoader(getClass().getResource("GameScene.fxml"));
-        GameController controller =new GameController(this);
+        Hero controller =new Hero(this,game);
         loader.setController(controller);
         Parent root=loader.load();
-        Scene scene=new Scene(root,653,653);
+        Scene scene=new Scene(root);
+
         game.setCurrentScene(scene);
         tap(loader,e);
     }
 
     public void tap(FXMLLoader loader,ActionEvent e){
         Scene scene=game.getCurrentScene();
-        GameController controller=loader.getController();
+        Hero controller=loader.getController();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -126,6 +132,8 @@ public class User {
         });
         Stage stage=(Stage)((Node)e.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        stage.setFullScreen(true);
+
     }
 
 }

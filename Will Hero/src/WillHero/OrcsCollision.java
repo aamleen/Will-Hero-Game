@@ -1,5 +1,7 @@
 package WillHero;
 
 public interface OrcsCollision {
-    public void collisionType(Hero hero , Weapons weapon);
+    default void collisionType(Hero hero , Weapons weapon){
+        if
+    }
 }
