@@ -18,6 +18,7 @@ public class Coins extends Game_Objects{
     @Override
     public void onCollision(Hero hero) {
         disappear(object);
+        hero.setScore(hero.getScore()+1);
     }
 
     public void disappear(ImageView img){

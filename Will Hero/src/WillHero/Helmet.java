@@ -23,6 +23,16 @@ public class Helmet {
     public void throw_weapon(int ID){
 
     }
+    public boolean hasWeapon(){
+        if(weapons.iterator().hasNext() == true ){
+            return true;
+        } else {
+            return false ;
+        }
+    }
+    public ArrayList<Weapons> getWeapon(){
+        return weapons;
+    }
     public void upgrade_weapon(int ID ){
         weapons.get(ID).setPower(weapons.get(ID).getPower()+1);
     }

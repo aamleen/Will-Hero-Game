@@ -11,7 +11,4 @@ public class GreenOrc extends Orcs{
         object.setFitWidth(33);
         object.setFitHeight(40);
     }
-    public void onCollision(Hero hero){}
-
-    public void killOrc(){};
 }

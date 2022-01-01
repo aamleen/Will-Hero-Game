@@ -48,15 +48,13 @@ public class HomeController {
         Parent root=loader.load();
         Hero controller=loader.getController();
         Scene scene=new Scene(root,653,653);
+        controller.game_loop();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if(keyEvent.getCode()== KeyCode.D)
                 {
-                    controller.getHeroAnimation().pause();
-                    if(controller.checkCollision()==false)
-                        controller.move(100);
-                    controller.getHeroAnimation().play();
+                    controller.move();
                 }
 
             }

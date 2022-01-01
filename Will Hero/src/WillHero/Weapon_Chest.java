@@ -8,12 +8,14 @@ import java.util.Random;
 public class Weapon_Chest extends Game_Objects {
 
 
+    int zy;
 
     Weapon_Chest(int x ){
-        object=new ImageView(new Image("Assets/chest.png"));
+        object=new ImageView(new Image("Assets/closedchest.png"));
         object.setLayoutX(x);
         object.setFitWidth(55);
         object.setFitHeight(40);
+        zy = (int)object.getLayoutX();
     }
     public void open(){}
 
@@ -26,7 +28,15 @@ public class Weapon_Chest extends Game_Objects {
             hero.addWeapon(new Swords());
     }
 
-    public void onCollision(Hero hero){}
+
+    @Override
+    public void onCollision(Hero hero){
+        object.setImage(new Image("Assets/openchest.png"));
+        object.setLayoutX(zy);
+        object.setFitWidth(55);
+        object.setFitHeight(40);
+//        disappear(object);
+    }
 
     public void disappear(){}
 }

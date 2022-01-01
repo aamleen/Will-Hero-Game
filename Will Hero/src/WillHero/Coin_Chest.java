@@ -21,8 +21,9 @@ public class Coin_Chest extends Game_Objects {
 
     public void give_item(){}
 
+    @Override
     public void onCollision(Hero hero){
-        object = new ImageView(new Image("Assets/ChestOpen.png"));
+        object.setImage(new Image("Assets/ChestOpen.png"));
         object.setLayoutX(zx);
         object.setFitWidth(55);
         object.setFitHeight(40);

@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Game extends Application {
 
@@ -42,15 +43,15 @@ public class Game extends Application {
 
     private int highscore;
 
+    @FXML
+    private Label labelid,labelscore;
+
     public Game(){
             game_objects=new ArrayList<>();
             platformer=new Platformer();
           islands=new ArrayList<>();
           user=new User(this);
           highscore=0;
-//        Coinchest = new  ArrayList<>();
-//        Weaponchest = new ArrayList<>();
-//        Tnt = new ArrayList<>();
     }
 
     @Override
@@ -91,6 +92,12 @@ public class Game extends Application {
     public void setHighscore(int highscore) {
         this.highscore = highscore;
     }
+    public void Labelscore(){
+        labelscore.setText(highscore+"");
+    }
+    public void LabelID(){
+        labelid.setText(labelid.getText());         // This needs to be changed.
+    }
 
     public void newGame(ActionEvent e) throws IOException {
         createGame();
@@ -119,6 +126,8 @@ public class Game extends Application {
         createChests();
         createTNT();
         createOrcs();
+        for(Game_Objects g: game_objects)
+            System.out.println(g);
     }
 
     public final void createChests(){
@@ -143,19 +152,14 @@ public class Game extends Application {
         }
     }
 
-    public boolean if_collision(Hero hero){
-        int res=game_objects.get(0).if_collides(hero);
-        if (res==1)
-            return true;
-        if(res==-1)
-            game_objects.remove(0);
-        return false;
+    public void if_collision(Hero hero){
+        Iterator i=game_objects.iterator();
+        while(i.hasNext()) {
+            int res = ((Game_Objects)i.next()).if_collides(hero);
+            if (res == -1 || res == -11)
+                i.remove();
+        }
     }
-
-    public void onCollision(Hero hero){
-        game_objects.get(0).onCollision(hero);
-    }
-
 
     void createCoins(){
         for(int x=300;x<3000;x+=700){

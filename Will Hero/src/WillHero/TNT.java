@@ -16,10 +16,10 @@ public class TNT extends Game_Objects{
     }
     @Override
     public void onCollision(Hero hero) {
-        object.setImage(new Image("Assets/TNT_Boom"));
+        object.setImage(new Image("Assets/TNT_Boom.png"));
         object.setLayoutX(cx);
-        object.setFitWidth(38);
-        object.setFitHeight(42);
+        object.setFitWidth(50);
+        object.setFitHeight(50);
     }
 
 }

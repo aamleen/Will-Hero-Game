@@ -25,7 +25,9 @@ public abstract class Weapons {
         this.power=power;
     }
 
-
+    public ImageView getWeapon() {
+        return weapon;
+    }
 
     @Override
     public String toString() {

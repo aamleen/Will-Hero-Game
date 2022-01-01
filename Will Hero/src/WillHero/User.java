@@ -108,8 +108,7 @@ public class User {
         Hero controller =new Hero(this,game);
         loader.setController(controller);
         Parent root=loader.load();
-        Scene scene=new Scene(root);
-
+        Scene scene=new Scene(root,653,653);
         game.setCurrentScene(scene);
         tap(loader,e);
     }
@@ -117,22 +116,20 @@ public class User {
     public void tap(FXMLLoader loader,ActionEvent e){
         Scene scene=game.getCurrentScene();
         Hero controller=loader.getController();
+        controller.game_loop();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if(keyEvent.getCode()== KeyCode.D)
                 {
-                    controller.getHeroAnimation().pause();
-                    if(controller.checkCollision()==false)
-                        controller.move(100);
-                    controller.getHeroAnimation().play();
+                    controller.move();
                 }
 
             }
         });
         Stage stage=(Stage)((Node)e.getSource()).getScene().getWindow();
         stage.setScene(scene);
-        stage.setFullScreen(true);
+        //stage.setFullScreen(true);
 
     }
 

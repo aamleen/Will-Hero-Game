@@ -6,10 +6,6 @@ import javafx.scene.image.ImageView;
 public class Redorc extends Orcs{
 
 
-    public void onCollision(Hero hero){}
-
-    public void killOrc(){};
-
     Redorc(int x){
         object=new ImageView(new Image("Assets/redOrc.jpeg"));
         object.setLayoutX(x);
