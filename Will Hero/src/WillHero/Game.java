@@ -1,31 +1,36 @@
 package WillHero;
 
 import javafx.application.Application;
-import javafx.application.Platform;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Game extends Application {
+public class Game extends Application implements Serializable {
 
     @FXML
     private Button newGame,loadGame,viewHighScore,exitGame;
 
     @FXML
     private AnchorPane WelcomePane;
+
+    @FXML
+    private Label labelid,labelscore;
 
     private Stage stage;
 
@@ -37,14 +42,9 @@ public class Game extends Application {
     private ArrayList<ImageView> islands;
 
     private ArrayList<Game_Objects> game_objects;
-//    private ArrayList<Game_Objects>  Coinchest;
-//    private ArrayList<Game_Objects>  Weaponchest;
-//    private ArrayList<Game_Objects> Tnt;
+    private ArrayList<Orcs> orcs;
 
     private int highscore;
-
-    @FXML
-    private Label labelid,labelscore;
 
     public Game(){
             game_objects=new ArrayList<>();
@@ -52,6 +52,7 @@ public class Game extends Application {
           islands=new ArrayList<>();
           user=new User(this);
           highscore=0;
+          orcs=new ArrayList<>();
     }
 
     @Override
@@ -99,6 +100,19 @@ public class Game extends Application {
         labelid.setText(labelid.getText());         // This needs to be changed.
     }
 
+
+//    public static void serialize()throws IOException{
+//        ObjectOutputStream out=null;
+//        try{
+//            User user_save=
+//            out=new ObjectOutputStream(
+//                    new FileOutputStream("UserSaves.txt")
+//            );
+//            out.writeObject(user);
+//
+//        }
+//    }
+
     public void newGame(ActionEvent e) throws IOException {
         createGame();
         FXMLLoader loader=new FXMLLoader(getClass().getResource("newGame.fxml"));
@@ -119,15 +133,13 @@ public class Game extends Application {
         exitGame(stage);
     }
 
-    public void createGame(){
+    public final void createGame(){
         platformer.createIslands();
-        islands=platformer.display();
+        islands=platformer.getIslands();
         createCoins();
         createChests();
         createTNT();
         createOrcs();
-        for(Game_Objects g: game_objects)
-            System.out.println(g);
     }
 
     public final void createChests(){
@@ -137,6 +149,20 @@ public class Game extends Application {
 
     public ArrayList<ImageView> getPlatform(){
         return islands;
+    }
+
+
+    public int platformCollision(ImageView img){
+        Bounds b;
+        for(ImageView p: platformer.getIslands()){
+            if(img.getBoundsInParent().getMaxY()<0)
+                return 0;
+            if(img.getBoundsInParent().getMinY()>0&&img.getBoundsInParent().intersects(p.getBoundsInParent())) {
+                return 1;
+                //Soja Vro
+            }
+        }
+        return 0;
     }
 
     public ImageView getObj(int i){
@@ -162,16 +188,17 @@ public class Game extends Application {
     }
 
     void createCoins(){
+        int i=-106;
         for(int x=300;x<3000;x+=700){
-            game_objects.add(new Coins(x,-126));
-            game_objects.add(new Coins(x+24,-126));
-            game_objects.add(new Coins(x+24*2,-126));
-            game_objects.add(new Coins(x+24*3,-126));
+            game_objects.add(new Coins(x,i));
+            game_objects.add(new Coins(x+24,i));
+            game_objects.add(new Coins(x+24*2,i));
+            game_objects.add(new Coins(x+24*3,i));
 
-            game_objects.add(new Coins(x,-160));
-            game_objects.add(new Coins(x+24,-160));
-            game_objects.add(new Coins(x+24*2,-160));
-            game_objects.add(new Coins(x+24*3,-160));
+            game_objects.add(new Coins(x,-140));
+            game_objects.add(new Coins(x+24,-140));
+            game_objects.add(new Coins(x+24*2,-140));
+            game_objects.add(new Coins(x+24*3,-140));
         }
     }
     void createCoinChest(){
@@ -192,6 +219,7 @@ public class Game extends Application {
     }
 
     private void createOrcs(){
+
         for(int i=200;i<3000;i+=350){
             if(i%100==50){
                 game_objects.add(new Redorc(i));
@@ -199,7 +227,13 @@ public class Game extends Application {
             else{
                 game_objects.add(new GreenOrc(i));
             }
+            orcs.add((Orcs)game_objects.get(game_objects.size()-1));
         }
+        game_objects.add(new BossOrc());
+    }
+
+    public ArrayList<Orcs> getOrcs() {
+        return orcs;
     }
 
     public void exitGame(Stage stage){
@@ -217,3 +251,5 @@ public class Game extends Application {
         launch(args);
     }
 }
+
+

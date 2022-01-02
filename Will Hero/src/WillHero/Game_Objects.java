@@ -13,10 +13,9 @@ public abstract class Game_Objects {
     public int if_collides(Hero hero){
         if(hero.getHero().getBoundsInParent().getMinX()>=object.getBoundsInParent().getMaxX())
             return -1;
-        if(hero.getHero().getBoundsInParent().getMaxX() >= object.getBoundsInParent().getMinX()){
-            System.out.println("Fucked");
+        if(hero.getHero().getBoundsInParent().intersects(object.getBoundsInParent())){
             onCollision(hero);
-            return 1;
+            return -1;
         }
         return 0;
     }
@@ -39,8 +38,5 @@ public abstract class Game_Objects {
         fade.setToValue(0.1);
         fade.setCycleCount(1);
     }
-    @Override
-    public String toString() {
-        return this.getClass()+"";
-    }
+
 }

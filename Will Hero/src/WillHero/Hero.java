@@ -37,12 +37,9 @@ public class Hero implements Initializable,Transition {
     private User user;
     private Game game;
     private Helmet helmet;
+    private MovingProp m_prop;
 
     private boolean gameOver;
-    private int x_vel;
-    private int y_vel;
-    private int duration;
-
 
     private ArrayList<Orcs> collidingOrc;
 
@@ -54,6 +51,7 @@ public class Hero implements Initializable,Transition {
         helmet=new Helmet("Fox");
         collidingOrc=new ArrayList<>();
         gameOver=false;
+        m_prop=new MovingProp(0,2,0);
     }
 
     private Timeline gameloop;
@@ -76,10 +74,6 @@ public class Hero implements Initializable,Transition {
         hero.setFitHeight(40);
         movingPlatform.getChildren().add(hero);
 
-        heroJump=new TranslateTransition();
-        //LinearAnimation(heroJump,hero);
-
-
     }
 
     public void game_loop(){
@@ -87,10 +81,20 @@ public class Hero implements Initializable,Transition {
         gameloop=new Timeline(
                 new KeyFrame(Duration.millis(10),
                         e -> {
-                            if(duration-- >0){
-                            hero.setTranslateX(hero.getTranslateX() + x_vel);
-                            movingPlatform.setTranslateX(movingPlatform.getTranslateX() - x_vel);
+                            orcJump();
+                            if(hero.getBoundsInParent().getMinY()>30)
+                                System.exit(0);
+
+                            if(m_prop.getDuration() >0){
+                                hero.setTranslateX(hero.getTranslateX() + m_prop.getX_vel());
+                                movingPlatform.setTranslateX(movingPlatform.getTranslateX() - m_prop.getX_vel());
+                                m_prop.setDuration(m_prop.getDuration()-1);
                             }
+                            else{
+                                jump();
+                            }
+                            helmet.move_weapon(movingPlatform);
+
                             for(Orcs o: collidingOrc){
                                 if(o.getDuration()>0){
                                     o.getObject().setTranslateX(o.getObject().getTranslateX()+o.getX_vel());
@@ -108,33 +112,46 @@ public class Hero implements Initializable,Transition {
         return helmet.getWeapon();
     }
 
-    void throwWeapon(){
-        if(helmet.hasWeapon()){
-            ArrayList<Weapons> weapons=getWeapons();
+    public void jump(){
+        if(game.platformCollision(hero)==1){
+            m_prop.setY_vel(2);
         }
-        else
-            return;
+        else if(hero.getBoundsInParent().getMaxY() < -100) {
+            m_prop.setY_vel(-2);
+        }
+        else{}
+        hero.setTranslateY(hero.getTranslateY()-m_prop.getY_vel());
+    }
+
+    public void orcJump(){
+        int i=0;
+        for(Orcs o: game.getOrcs()){
+            if(game.platformCollision(o.getObject())==1){
+                o.sety_vel(1);
+            }
+            if(o.getObject().getBoundsInParent().getMaxY()<-100)
+                o.sety_vel(-1);
+
+            o.getObject().setTranslateY(o.getObject().getTranslateY()-o.gety_vel());
+        }
     }
 
     public void addWeapon(Weapons weapon){
         helmet.store_Weapon(weapon);
-
+        staticFrame.getChildren().add(weapon.getWeapon());
     }
-
     public void displaceOrc(Orcs orc){
         collidingOrc.add(orc);
         System.out.println(collidingOrc);
     }
-
     public int getScore(){
         return Integer.parseInt(onScreen_Score.getText());
     }
 
     public void setScore(int n){
         user.setScore(n);
-        onScreen_Score.setText(n+"");
+        onScreen_Score.setText(n+10+"");
     }
-
     TranslateTransition getHeroAnimation(){
         return heroJump;
     }
@@ -148,35 +165,8 @@ public class Hero implements Initializable,Transition {
     }
 
     public void move(){
-        x_vel=1;
-        duration=30;
+        m_prop.setX_vel(1);
+        m_prop.setDuration(30);
+        helmet.throw_weapon(this,movingPlatform);
     }
-
-    /*public void move(double h_move){
-        hero.setTranslateX(hero.getTranslateX()+h_move);
-
-        if(hero.getBoundsInParent().getMaxX()>300)
-            movingPlatform.setTranslateX(movingPlatform.getTranslateX()-h_move);
-        System.out.println("After:");
-        System.out.println("Hero: "+hero.getBoundsInParent());
-        System.out.println("Orcs: "+orcs.get(0).getBoundsInParent()+"\n");
-    }
-
-    public boolean checkCollision(){
-        if(hero.getBoundsInParent().getMaxX()==orcs.get(0).getBoundsInParent().getMinX()){
-            if(hero.getBoundsInParent().getMinY()>orcs.get(0).getBoundsInParent().getMaxY()){
-                OrcJump.pause();
-                System.out.println("Pichak gya saala");
-                move(100);
-                return true;
-            }
-            //orcs.get(0).setTranslateX(orcs.get(0).getTranslateX()-(orcs.get(0).getTranslateX()-(hero.getTranslateX()-100)));
-            double dist=orcs.get(0).getBoundsInParent().getMinX()-hero.getBoundsInParent().getMaxX();
-            move(dist);
-//            hero.setTranslateX(hero.getTranslateX()-);
-            return true;
-        }
-        return false;
-    }*/
-
 }

@@ -7,8 +7,6 @@ public class Shurikens extends Weapons{
     Shurikens(){
         super("Shurikens");
         weapon=new ImageView(new Image("Assets/shuriken.png"));
-//        weapon.setLayoutX();
-//        weapon.setLayoutY();
         weapon.setFitWidth(20);
         weapon.setFitHeight(20);
 

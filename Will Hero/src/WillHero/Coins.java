@@ -1,9 +1,8 @@
 package WillHero;
 
-import javafx.animation.FadeTransition;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 
 public class Coins extends Game_Objects{
 
@@ -14,19 +13,10 @@ public class Coins extends Game_Objects{
         object.setFitWidth(20);
         object.setFitHeight(20);
     }
-
     @Override
     public void onCollision(Hero hero) {
-        disappear(object);
+        object.setOpacity(0);
         hero.setScore(hero.getScore()+1);
     }
 
-    public void disappear(ImageView img){
-        FadeTransition fade = new FadeTransition();
-        fade.setDuration(Duration.millis(0.1));
-        fade.setFromValue(1);
-        fade.setToValue(0.1);
-        fade.setCycleCount(1);
-        fade.setAutoReverse(true);
-    }
 }

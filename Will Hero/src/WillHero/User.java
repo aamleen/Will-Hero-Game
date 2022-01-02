@@ -35,42 +35,22 @@ public class User {
 
     private Label onScreen_score;
 
-
     private int score;
     private Game game;
 
     public User(Game game){
         this.game=game;
     }
-
-    public boolean if_highscore(){
-        return true;
-    }
-    public void resume(){
-
-    }
-    public void pause(){
-
-    }
     public void save(){
         //Serializable
     }
-    public void load(){
+    public void load() {
         //Serializable
-    }
-    public void getScore(){
-
     }
     public void setScore(int score){
         if(score>game.getHighscore())
             game.setHighscore(score);
         this.score=score;
-    }
-    public void end_game(){
-
-    }
-    public void resurrect(){
-
     }
 
     public void addIsland(AnchorPane movingPane){
@@ -130,7 +110,8 @@ public class User {
         Stage stage=(Stage)((Node)e.getSource()).getScene().getWindow();
         stage.setScene(scene);
         //stage.setFullScreen(true);
-
     }
+
+
 
 }

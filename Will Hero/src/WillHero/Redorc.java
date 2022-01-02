@@ -11,8 +11,6 @@ public class Redorc extends Orcs{
         object.setLayoutX(x);
         object.setFitWidth(33);
         object.setFitHeight(40);
-
-//        object.setY(y);
     }
 
 

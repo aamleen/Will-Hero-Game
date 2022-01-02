@@ -6,12 +6,9 @@ public interface OrcsCollision {
     default int collisionType(Hero hero, ImageView object, int check){
         if(check==1) {
             if (hero.getHero().getBoundsInParent().getMaxX() == object.getBoundsInParent().getMinX()) {
-                System.out.println("Hola..baahr se bhola");
                 return 1;
             }
             if (hero.getHero().getBoundsInParent().getMaxY() < object.getBoundsInParent().getMinY()) {
-                System.out.println("hero:"+hero.getHero().getBoundsInParent());
-                System.out.println(object.getBoundsInParent());
                 return 2;
             }
         }

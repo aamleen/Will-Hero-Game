@@ -35,6 +35,8 @@ public class Weapon_Chest extends Game_Objects {
         object.setLayoutX(zy);
         object.setFitWidth(55);
         object.setFitHeight(40);
+        give_item(hero);
+
 //        disappear(object);
     }
 

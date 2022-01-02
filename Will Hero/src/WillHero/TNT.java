@@ -12,7 +12,6 @@ public class TNT extends Game_Objects{
         object.setFitWidth(33);
         object.setFitHeight(40);
         cx= (int) object.getLayoutX();
-//        object.setY(y);
     }
     @Override
     public void onCollision(Hero hero) {

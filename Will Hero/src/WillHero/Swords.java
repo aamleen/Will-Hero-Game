@@ -7,8 +7,6 @@ public class Swords extends Weapons{
     Swords(){
         super("Swords");
         weapon=new ImageView(new Image("Assets/sword.png"));
-//        weapon.setLayoutX();
-//        weapon.setLayoutY();
         weapon.setFitWidth(20);
         weapon.setFitHeight(20);
     }
