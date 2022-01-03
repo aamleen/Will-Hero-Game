@@ -5,9 +5,6 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public abstract class Game_Objects {
-    private int length;
-    private int height;
-
     protected ImageView object;
 
     public int if_collides(Hero hero){
@@ -31,12 +28,6 @@ public abstract class Game_Objects {
     public abstract void onCollision(Hero hero);
 
     public void disappear(){
-        FadeTransition fade = new FadeTransition();
-        fade.setNode(object);
-        fade.setDuration(Duration.millis(100));
-        fade.setFromValue(1);
-        fade.setToValue(0.1);
-        fade.setCycleCount(1);
+        object.setOpacity(0);
     }
-
 }

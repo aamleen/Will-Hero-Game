@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="newGamePane" prefHeight="653.0" prefWidth="1337.0" style="-fx-background-image: url('Assets/newGameScreen.jpg');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WillHero.HomeController">
+<AnchorPane fx:id="newGamePane" prefHeight="653.0" prefWidth="1337.0" style="-fx-background-image: url('Assets/newGameScreen.jpg');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <AnchorPane layoutX="357.0" layoutY="98.0" prefHeight="487.0" prefWidth="650.0" style="-fx-background-color: #fffdd0; -fx-background-radius: 30; -fx-border-radius: 30;">
             <children>
@@ -15,7 +15,7 @@
                         <Font size="21.0" />
                     </font>
                 </Label>
-                <Button fx:id="startGame" layoutX="469.0" layoutY="236.0" mnemonicParsing="false" onAction="#startGame" prefHeight="31.0" prefWidth="92.0" text="Start " />
+                <Button fx:id="startGame" layoutX="469.0" layoutY="264.0" mnemonicParsing="false" onAction="#startLoadedGame" prefHeight="31.0" prefWidth="92.0" text="Start " />
                 <Label fx:id="greeting" contentDisplay="CENTER" layoutX="26.0" layoutY="92.0" prefHeight="20.0" prefWidth="621.0" text="Hii Guest!! Please select from the following saved games">
                     <font>
                         <Font size="14.0" />
@@ -47,7 +47,12 @@
                     </font>
                 </Label>
                 <Button fx:id="backButton" layoutX="31.0" layoutY="32.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="30.0" style="-fx-graphic: url('Assets/back-button.png'); -fx-background-radius: 30; -fx-blend-mode: hard-light;" />
-            <ListView layoutX="46.0" layoutY="124.0" prefHeight="195.0" prefWidth="168.0" />
+            <ListView fx:id="userHistory" layoutX="46.0" layoutY="124.0" prefHeight="195.0" prefWidth="168.0" />
+            <Label fx:id="chosenUser" contentDisplay="CENTER" layoutX="376.0" layoutY="156.0" prefHeight="31.0" prefWidth="228.0" text="Guest">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
     </children>

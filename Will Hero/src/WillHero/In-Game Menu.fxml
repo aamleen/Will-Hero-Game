@@ -7,21 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="newGamePane" prefHeight="653.0" prefWidth="1337.0" style="-fx-background-image: url('Assets/inGameMenu.jpg');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WillHero.inGameMenuController">
+<AnchorPane fx:id="newGamePane" prefHeight="653.0" prefWidth="1337.0" style="-fx-background-image: url('Assets/inGameMenu.jpg');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <AnchorPane layoutX="357.0" layoutY="98.0" prefHeight="487.0" prefWidth="650.0" style="-fx-background-color: #fffdd0; -fx-background-radius: 30; -fx-border-radius: 30;">
             <children>
-            <Label layoutX="101.0" layoutY="163.0" prefHeight="54.0" prefWidth="193.0" text="Current Score: 0">
+            <Label fx:id="currentScore" layoutX="101.0" layoutY="163.0" prefHeight="54.0" prefWidth="193.0" text="Current Score: 0">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="102.0" layoutY="217.0" prefHeight="45.0" prefWidth="177.0" text="High Score: 0">
+            <Label fx:id="highScore" layoutX="102.0" layoutY="217.0" prefHeight="45.0" prefWidth="177.0" text="High Score: 0">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Button fx:id="restart" layoutX="62.0" layoutY="379.0" mnemonicParsing="false" onAction="#resume" prefHeight="36.0" prefWidth="117.0" style="-fx-background-radius: 15px; -fx-background-color: #FD5616; -fx-blend-mode: hard-light;" text="Restart">
+            <Button fx:id="restart" layoutX="62.0" layoutY="379.0" mnemonicParsing="false" onAction="#restart" prefHeight="36.0" prefWidth="117.0" style="-fx-background-radius: 15px; -fx-background-color: #FD5616; -fx-blend-mode: hard-light;" text="Restart">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
@@ -53,7 +53,7 @@
                   <Image url="@../Assets/Coin.png" />
                </image>
             </ImageView>
-            <Button layoutX="226.0" layoutY="379.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="117.0" style="-fx-background-radius: 15px;" text="Save" />
+            <Button layoutX="226.0" layoutY="379.0" mnemonicParsing="false" onAction="#saveGame" prefHeight="36.0" prefWidth="117.0" style="-fx-background-radius: 15px;" text="Save" />
             <Button layoutX="550.0" layoutY="249.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-graphic: url('Assets/musicicon.png'); -fx-background-radius: 30em; -fx-blend-mode: hard-light;" />
             </children>
         </AnchorPane>

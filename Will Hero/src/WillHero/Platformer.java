@@ -6,7 +6,6 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 
 public class Platformer {
-    int length;
 
     private ArrayList<ImageView> islands;
 
@@ -18,16 +17,17 @@ public class Platformer {
         Image island1=new Image("Assets/island1.png");
         Image island2=new Image("Assets/island2.png");
         int k=0;
-        for(int i=0;i<3000;i+=700){
+        for(int i=0;i<3000;i+=320) {
             islands.add(new ImageView(island1));
             islands.get(k).setLayoutX(i);
             islands.get(k).setY(-40);
-            System.out.println("Island1: "+islands.get(k++).getBoundsInParent());
+            System.out.println("Island1: " + islands.get(k++).getBoundsInParent());
+        }
+        for(int j = 0; j<3600; j+=500) {
             islands.add(new ImageView(island2));
-            islands.get(k).setLayoutX(i+200);
+            islands.get(k).setLayoutX(j - (700%(k+1)+2));
             islands.get(k).setY(-40);
-            System.out.println("Island2: "+islands.get(k++).getBoundsInParent());
-
+            System.out.println("Island2: " + islands.get(k++).getBoundsInParent());
         }
     }
 
@@ -36,5 +36,5 @@ public class Platformer {
     }
     public ArrayList<ImageView> getIslands(){return islands;}
 
-    public void remove(){}
+
 }

@@ -6,9 +6,9 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class Coin_Chest extends Game_Objects {
-    int zx ;
+    private int zx ;
     Coin_Chest(int x ){
-            object=new ImageView(new Image("Assets/ChestClosed.png"));
+            object=new ImageView(new Image("Assets/closedchest.png"));
             object.setLayoutX(x);
             object.setFitWidth(55);
             object.setFitHeight(40);
@@ -17,10 +17,10 @@ public class Coin_Chest extends Game_Objects {
     }
     @Override
     public void onCollision(Hero hero){
-        object.setImage(new Image("Assets/ChestOpen.png"));
+        object.setImage(new Image("Assets/openchest.png"));
         object.setLayoutX(zx);
         object.setFitWidth(55);
         object.setFitHeight(40);
-
+        hero.setScore(hero.getScore()+10);
     }
 }

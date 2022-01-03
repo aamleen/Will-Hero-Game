@@ -42,14 +42,14 @@ public abstract class Orcs extends Game_Objects implements OrcsCollision{
                 break;
             case 2: hero.killHero();
                 break;
-            case 3: killOrc();
+            case 3: killOrc(hero);
                 break;
             default:
                 break;
         }
     }
 
-    public void killOrc(){
+    public void killOrc(Hero hero){
         disappear();
         kill=true;
     }
@@ -58,11 +58,12 @@ public abstract class Orcs extends Game_Objects implements OrcsCollision{
     public int if_collides(Hero hero){
         if(hero.getHero().getBoundsInParent().getMinX()>object.getBoundsInParent().getMaxX())
             return -1;
+        if(collisionType(hero, object, 0)==1){
+            collision_type=3;
+            onCollision(hero);
+        }
         if(hero.getHero().getBoundsInParent().intersects(object.getBoundsInParent())) {
-            if(collisionType(hero, object, 0)==1){
-                collision_type=3;
-                onCollision(hero);
-            }
+
             switch(collisionType(hero, object, 1)){
                 case 1:
                     collision_type=1;

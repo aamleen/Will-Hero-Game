@@ -56,6 +56,9 @@ public class Helmet {
         }
     }
 
+    public ArrayList<Weapons> getCloneWeapons(){
+        return weapons_clone;
+    }
     public boolean hasWeapon(){
         if(weapons.iterator().hasNext() == true ){
             return true;

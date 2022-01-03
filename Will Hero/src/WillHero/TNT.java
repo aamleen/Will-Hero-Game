@@ -19,6 +19,7 @@ public class TNT extends Game_Objects{
         object.setLayoutX(cx);
         object.setFitWidth(50);
         object.setFitHeight(50);
+        hero.killHero();
     }
 
 }

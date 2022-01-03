@@ -29,9 +29,6 @@ public class Game extends Application implements Serializable {
     @FXML
     private AnchorPane WelcomePane;
 
-    @FXML
-    private Label labelid,labelscore;
-
     private Stage stage;
 
     private Scene currentScene;
@@ -44,11 +41,11 @@ public class Game extends Application implements Serializable {
     private ArrayList<Game_Objects> game_objects;
     private ArrayList<Orcs> orcs;
 
-    private int highscore;
+    private static int highscore=0;
 
     public Game(){
-            game_objects=new ArrayList<>();
-            platformer=new Platformer();
+          game_objects=new ArrayList<>();
+          platformer=new Platformer();
           islands=new ArrayList<>();
           user=new User(this);
           highscore=0;
@@ -89,29 +86,10 @@ public class Game extends Application implements Serializable {
     public int getHighscore() {
         return highscore;
     }
-
-    public void setHighscore(int highscore) {
-        this.highscore = highscore;
+    public void setHighscore(int score) {
+        if(score>=highscore)
+            this.highscore = highscore;
     }
-    public void Labelscore(){
-        labelscore.setText(highscore+"");
-    }
-    public void LabelID(){
-        labelid.setText(labelid.getText());         // This needs to be changed.
-    }
-
-
-//    public static void serialize()throws IOException{
-//        ObjectOutputStream out=null;
-//        try{
-//            User user_save=
-//            out=new ObjectOutputStream(
-//                    new FileOutputStream("UserSaves.txt")
-//            );
-//            out.writeObject(user);
-//
-//        }
-//    }
 
     public void newGame(ActionEvent e) throws IOException {
         createGame();
@@ -123,9 +101,13 @@ public class Game extends Application implements Serializable {
     }
 
     public void loadGame(ActionEvent e) throws IOException {
-        Parent root= FXMLLoader.load(getClass().getResource("loadGame.fxml"));
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("loadGame.fxml"));
+        user=new User(this);
+        loader.setController(user);
+        Parent root= loader.load();
         Stage stage=(Stage)((Node)e.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
+        user.load();
     }
 
     public void exitScreen(ActionEvent e){
@@ -133,6 +115,16 @@ public class Game extends Application implements Serializable {
         exitGame(stage);
     }
 
+    public void saveGame(){
+        DataBase d=new DataBase(user.getScore(),user.get_Herox(),user.get_HeroY(),user.get_FrameX(),user.get_HeroWeapons(),user.get_name());
+        try {
+            DataBase.serialize(d);
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     public final void createGame(){
         platformer.createIslands();
         islands=platformer.getIslands();
@@ -151,7 +143,6 @@ public class Game extends Application implements Serializable {
         return islands;
     }
 
-
     public int platformCollision(ImageView img){
         Bounds b;
         for(ImageView p: platformer.getIslands()){
@@ -159,7 +150,6 @@ public class Game extends Application implements Serializable {
                 return 0;
             if(img.getBoundsInParent().getMinY()>0&&img.getBoundsInParent().intersects(p.getBoundsInParent())) {
                 return 1;
-                //Soja Vro
             }
         }
         return 0;
@@ -202,25 +192,23 @@ public class Game extends Application implements Serializable {
         }
     }
     void createCoinChest(){
-        for(int i = 450; i < 2500 ; i = i + 583){
+        for(int i = 387; i < 1800 ; i = i + 387 ){
             game_objects.add(new Coin_Chest(i));
         }
     }
-
     void createWeaponChest(){
-        for(int i = 425; i < 1800 ; i = i + 565){
+        for(int i = 670; i < 2000 ; i = i + 745){
             game_objects.add(new Weapon_Chest(i));
         }
     }
     void createTNT(){
-        for(int i = 800; i < 2000 ; i = i + 800){
+        for(int i = 550; i < 2100 ; i = i + 483){
             game_objects.add(new TNT(i));
         }
+        game_objects.add(new TNT(2885));
     }
-
     private void createOrcs(){
-
-        for(int i=200;i<3000;i+=350){
+        for(int i=400;i<3000;i+=650){
             if(i%100==50){
                 game_objects.add(new Redorc(i));
             }
@@ -229,7 +217,10 @@ public class Game extends Application implements Serializable {
             }
             orcs.add((Orcs)game_objects.get(game_objects.size()-1));
         }
+        game_objects.add(new GreenOrc(2956));
+        orcs.add((Orcs)game_objects.get(game_objects.size()-1));
         game_objects.add(new BossOrc());
+        orcs.add((Orcs)game_objects.get(game_objects.size()-1));
     }
 
     public ArrayList<Orcs> getOrcs() {
@@ -247,7 +238,6 @@ public class Game extends Application implements Serializable {
         }
     }
     public static void main(String[] args) {
-        //new Game(args);
         launch(args);
     }
 }

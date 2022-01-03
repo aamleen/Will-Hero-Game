@@ -2,7 +2,9 @@ package WillHero;
 
 import javafx.scene.image.ImageView;
 
-public abstract class Weapons implements Cloneable{
+import java.io.Serializable;
+
+public abstract class Weapons implements Cloneable, Serializable {
     private int power;
     private int ID;
     private String name;
@@ -14,12 +16,6 @@ public abstract class Weapons implements Cloneable{
         m_prop=new MovingProp(0,0,0);
     }
 
-    public boolean if_hits(){
-        return true;
-    }
-    public int get_ID(){
-        return 0;
-    }
     public int getPower(){
         return power;
     }
@@ -49,8 +45,6 @@ public abstract class Weapons implements Cloneable{
     public int getDuration(){
         return m_prop.getDuration();
     }
-
-
     @Override
     public String toString() {
         return name;

@@ -7,21 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="newGamePane" prefHeight="653.0" prefWidth="1337.0" style="-fx-background-image: url('Assets/inGameMenu.jpg');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WillHero.inGameMenuController">
+<AnchorPane fx:id="newGamePane" prefHeight="653.0" prefWidth="1337.0" style="-fx-background-image: url('Assets/inGameMenu.jpg');" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <AnchorPane layoutX="357.0" layoutY="98.0" prefHeight="487.0" prefWidth="650.0" style="-fx-background-color: #fffdd0; -fx-background-radius: 30; -fx-border-radius: 30;">
             <children>
-                <Label layoutX="101.0" layoutY="163.0" prefHeight="54.0" prefWidth="193.0" text="Current Score: 0">
+                <Label fx:id="currentScore" layoutX="101.0" layoutY="163.0" prefHeight="54.0" prefWidth="193.0" text="Current Score: 0">
                     <font>
                         <Font size="17.0" />
                     </font>
                 </Label>
-                <Label layoutX="102.0" layoutY="217.0" prefHeight="45.0" prefWidth="177.0" text="High Score: 0">
+                <Label fx:id="highScore" layoutX="102.0" layoutY="217.0" prefHeight="45.0" prefWidth="177.0" text="High Score: 0">
                     <font>
                         <Font size="17.0" />
                     </font>
                 </Label>
-                <Button fx:id="resume" layoutX="136.0" layoutY="374.0" mnemonicParsing="false" onAction="#resume" prefHeight="45.0" prefWidth="139.0" style="-fx-background-radius: 30px; -fx-background-color: #32F70A; -fx-blend-mode: hard-light;" text="YES" textFill="#f0eded">
+                <Button fx:id="resume" layoutX="136.0" layoutY="374.0" mnemonicParsing="false" onAction="#resurrect" prefHeight="45.0" prefWidth="139.0" style="-fx-background-radius: 30px; -fx-background-color: #32F70A; -fx-blend-mode: hard-light;" text="YES" textFill="#f0eded">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font></Button>

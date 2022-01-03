@@ -3,47 +3,49 @@ package WillHero;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
-public class Hero implements Initializable,Transition {
+public class Hero implements Initializable{
 
     @FXML
     private AnchorPane staticFrame ,  movingPlatform;
 
+    @FXML
+    private Button pauseButton;
+
     private ImageView hero;
-
     private ArrayList<ImageView> orcs;
-
     private TranslateTransition heroJump,OrcJump;
-
+    private boolean gameOver,gamewon;
     private User user;
     private Game game;
     private Helmet helmet;
     private MovingProp m_prop;
-
-    private boolean gameOver;
-
     private ArrayList<Orcs> collidingOrc;
 
     private Label onScreen_Score;
+
+    @FXML
+    private Label steps;
+
 
     Hero(User user, Game game){
         this.user=user;
@@ -60,6 +62,7 @@ public class Hero implements Initializable,Transition {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user.addIsland(movingPlatform);
         user.addObjects(movingPlatform);
+        System.out.println("Hiii Loaded game");
 
         onScreen_Score=new Label();
         onScreen_Score.setAlignment(Pos.BOTTOM_RIGHT);
@@ -73,7 +76,6 @@ public class Hero implements Initializable,Transition {
         hero.setFitWidth(40);
         hero.setFitHeight(40);
         movingPlatform.getChildren().add(hero);
-
     }
 
     public void game_loop(){
@@ -81,9 +83,19 @@ public class Hero implements Initializable,Transition {
         gameloop=new Timeline(
                 new KeyFrame(Duration.millis(10),
                         e -> {
+                            if(gameOver) {
+                                try {
+                                    user.killHero();
+                                    gameOver=false;
+                                    hero.setTranslateX(hero.getTranslateX()-60);
+                                    movingPlatform.setTranslateX(movingPlatform.getTranslateX()+60);
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
+                                }
+                            }
                             orcJump();
-                            if(hero.getBoundsInParent().getMinY()>30)
-                                System.exit(0);
+                            if(hero.getBoundsInParent().getMinY()>100)
+                                killHero();
 
                             if(m_prop.getDuration() >0){
                                 hero.setTranslateX(hero.getTranslateX() + m_prop.getX_vel());
@@ -102,14 +114,33 @@ public class Hero implements Initializable,Transition {
                                 }
                             }
                             game.if_collision(this);
+
                         })
         );
         gameloop.setCycleCount(Timeline.INDEFINITE);
         gameloop.play();
     }
 
+
+    public void resume(DataBase d){
+        System.out.println(d.getHero_ypos()+", "+d.getHero_xpos()+", "+d.getFrame_x());
+        hero.setTranslateX(hero.getTranslateX()+d.getHero_xpos());
+        hero.setTranslateX(d.getHero_ypos());
+        movingPlatform.setTranslateX(movingPlatform.getTranslateX()-d.getFrame_x());
+        setScore(d.getScore());
+
+    }
+
+    public Timeline getGameloop(){
+        return gameloop;
+    }
+
     ArrayList<Weapons> getWeapons(){
         return helmet.getWeapon();
+    }
+
+    public ArrayList<Weapons> getCloneWeapons(){
+        return helmet.getCloneWeapons();
     }
 
     public void jump(){
@@ -122,6 +153,8 @@ public class Hero implements Initializable,Transition {
         else{}
         hero.setTranslateY(hero.getTranslateY()-m_prop.getY_vel());
     }
+
+
 
     public void orcJump(){
         int i=0;
@@ -150,23 +183,60 @@ public class Hero implements Initializable,Transition {
 
     public void setScore(int n){
         user.setScore(n);
-        onScreen_Score.setText(n+10+"");
-    }
-    TranslateTransition getHeroAnimation(){
-        return heroJump;
+        onScreen_Score.setText(n+"");
     }
 
     public ImageView getHero(){
         return hero;
     }
 
+    public double get_FrameX(){
+        return movingPlatform.getLayoutX();
+    }
+
     public void killHero(){
         gameOver=true;
     }
 
+    public void gameWon() throws IOException {
+        gamewon=true;
+        gameloop.stop();
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("Win.fxml"));
+        inGameMenuController controller=new inGameMenuController(user);
+        loader.setController(controller);
+        Parent root=loader.load();
+        Stage stage=(Stage)(staticFrame.getScene().getWindow());
+        stage.setScene(new Scene(root));
+    }
+
+    private int count;
     public void move(){
         m_prop.setX_vel(1);
         m_prop.setDuration(30);
         helmet.throw_weapon(this,movingPlatform);
+        try{
+            steps.setText((Integer.parseInt(steps.getText())+1)+"");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public Stage getStage(){
+        return (Stage)(staticFrame.getScene().getWindow());
+    }
+
+    public void pause(ActionEvent e) throws IOException {
+        gameloop.pause();
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("In-Game Menu.fxml"));
+        inGameMenuController controller=new inGameMenuController(this.user);
+        loader.setController(controller);
+        Parent root=loader.load();
+        Stage primary=(Stage)staticFrame.getScene().getWindow();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        controller.setScores();
+        stage.showAndWait();
+        gameloop.play();
     }
 }
